@@ -4,9 +4,10 @@ This Windows launcher reads `launcher.json`, downloads a CI/CD-hosted JSON
 manifest, verifies every changed file with SHA-256, and starts the configured
 game executable.
 
-The manifest can be hosted as a GitHub Release asset, GitHub Pages file, or any
-HTTPS endpoint. The next step is adding the GitHub Actions workflow that builds
-the client, calculates the manifest hashes, and publishes the files.
+The manifest is downloaded from the latest GitHub Release. The release workflow
+builds the Windows executable and manifest. Set the `CLIENT_BASE_URL` GitHub
+Actions secret and provide the client files in a `client/` workspace directory
+before releasing; see `CLIENT_HOSTING.md`.
 
 Run from Python 3.11+ with:
 

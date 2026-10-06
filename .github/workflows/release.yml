@@ -1,0 +1,62 @@
+name: Release Maveni Launcher
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: Version label, for example v2026.10.06.1
+        required: true
+        type: string
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout launcher
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Install packager
+        run: python -m pip install --upgrade pyinstaller
+
+      - name: Resolve version
+        id: version
+        shell: bash
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "value=${{ inputs.version }}" >> "$GITHUB_OUTPUT"
+          else
+            echo "value=${GITHUB_REF_NAME}" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Build launcher
+        run: pyinstaller --onefile --windowed --name MaveniLauncher launcher.py
+
+      - name: Build manifest
+        env:
+          CLIENT_BASE_URL: ${{ secrets.CLIENT_BASE_URL }}
+        run: >-
+          python tools/build_manifest.py
+          --root client
+          --base-url "$env:CLIENT_BASE_URL"
+          --version "${{ steps.version.outputs.value }}"
+          --news-file news.txt
+          --output dist/manifest.json
+
+      - name: Publish release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: >-
+          gh release create "${{ steps.version.outputs.value }}"
+          dist/MaveniLauncher.exe dist/manifest.json
+          --title "Maveni ${{ steps.version.outputs.value }}"
+          --generate-notes
