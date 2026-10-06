@@ -1,6 +1,6 @@
 {
-  "manifest_url": "https://github.com/root-jfp/MaveniLauncher/releases/latest/download/manifest.json",
+  "manifest_url": "https://metin.maveni.net/client/manifest.json",
   "install_dir": "game",
-  "game_exe": "metin2client.exe",
+  "game_exe": "Metin2.exe",
   "game_args": []
 }

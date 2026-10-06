@@ -31,7 +31,7 @@ def main() -> None:
         if not path.is_file():
             continue
         relative = path.relative_to(root).as_posix()
-        if path.name.startswith("."):
+        if path.name.startswith(".") or relative == "manifest.json" or path.name.endswith(".download"):
             continue
         files.append({
             "path": relative,

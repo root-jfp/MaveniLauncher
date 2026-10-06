@@ -15,9 +15,9 @@ from tkinter import filedialog, messagebox, ttk
 ROOT = Path(__file__).resolve().parent
 CONFIG_PATH = ROOT / "launcher.json"
 DEFAULT_CONFIG = {
-    "manifest_url": "https://example.invalid/maveni/manifest.json",
+    "manifest_url": "https://metin.maveni.net/client/manifest.json",
     "install_dir": str(ROOT / "game"),
-    "game_exe": "metin2client.exe",
+    "game_exe": "Metin2.exe",
     "game_args": [],
 }
 
