@@ -1,0 +1,11 @@
+{
+  "version": "2026.10.06.1",
+  "base_url": "https://downloads.example.invalid/maveni/client",
+  "news": "Welcome to Maveni.",
+  "files": [
+    {
+      "path": "metin2client.exe",
+      "sha256": "replace-with-real-sha256"
+    }
+  ]
+}

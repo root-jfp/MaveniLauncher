@@ -1,0 +1,6 @@
+{
+  "manifest_url": "https://example.invalid/maveni/manifest.json",
+  "install_dir": "game",
+  "game_exe": "metin2client.exe",
+  "game_args": []
+}
