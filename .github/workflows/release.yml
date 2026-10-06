@@ -44,7 +44,9 @@ jobs:
       - name: Build manifest
         env:
           CLIENT_BASE_URL: ${{ secrets.CLIENT_BASE_URL }}
-        run: >-
+        run: |
+          if (-not $env:CLIENT_BASE_URL) { throw 'Configure the CLIENT_BASE_URL repository secret first.' }
+          if (-not (Get-ChildItem client -File -Recurse | Select-Object -First 1)) { throw 'No client files were supplied in the client directory.' }
           python tools/build_manifest.py
           --root client
           --base-url "$env:CLIENT_BASE_URL"
